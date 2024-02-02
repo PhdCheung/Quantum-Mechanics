@@ -1,0 +1,309 @@
+\documentclass{article}
+\usepackage[english]{babel} % 加入英文支持
+\usepackage[UTF8, heading=false, scheme=plain]{ctex} % ctex 配置，不影响标题和数字格式
+\usepackage{pdfpages}
+\usepackage{bm}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{gensymb}
+\usepackage{array} % for better columns
+\usepackage{amsmath}
+\usepackage{amsthm}
+\numberwithin{equation}{section}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{xstring}
+\newcommand{\findandreplace}[2]{\StrSubstitute{#1}{\equiv}{:=}[#2]}
+\usepackage{dsfont}
+\usepackage{fancyhdr} % 添加页眉和页脚的宏包
+
+\author{Albert Cheung}
+\title{Introduction to Quantum Mechanics\\ David J. Griffiths}
+
+\begin{document}
+	
+	\maketitle
+	\thispagestyle{empty} % 禁止在封面显示页码
+
+
+	\newpage
+    \thispagestyle{empty} % 禁止在前言显示页码
+    \section*{Preface}
+
+
+	\newpage
+	\pagestyle{fancy}
+	\fancyhf{} % 清除所有页眉页脚文本
+	\fancyhead[L]{\nouppercase{\leftmark}} % 页眉左侧显示章节标题，\nouppercase{} 确保标题是按照小写显示
+	\fancyhead[R]{} % 页眉右侧为空
+	\renewcommand{\headrulewidth}{0.4pt} % 页眉下方横线的宽度
+	\renewcommand{\footrulewidth}{0pt} % 页脚下方横线的宽度（此处设为0pt表示没有横线）
+	\fancyfoot[C]{\thepage} % 页脚中间显示页码
+	\fancypagestyle{plain}{ % 确保章节的第一页也使用fancy页眉
+		\fancyhf{}
+		\fancyhead[L]{\nouppercase{\leftmark}}
+		\fancyhead[R]{}
+		\fancyfoot[C]{\thepage} % plain样式下也显示页码
+		\renewcommand{\headrulewidth}{0.4pt}
+	}
+	
+	\tableofcontents
+	\thispagestyle{empty} % 禁止在目录页显示页码
+	
+	\newpage
+	\setcounter{page}{1} % 从这页开始页码重置为1
+
+\section{The Wave function}
+\subsection{The Schrödinger Equation}
+
+We're looking for the particle's wave function, which can be represented as
+\begin{equation}
+\Psi(x,t)
+\end{equation}
+We get it by solving the Schrödinger Equation
+\begin{equation}
+i\hbar\frac{\partial \Psi}{\partial t}=-\frac{\hbar^2}{2m}\frac{\partial^2\Psi}{\partial x^2}+V\Psi
+\end{equation}
+where $\hbar$ satisfies
+\begin{equation}
+	\hbar=\frac{h}{2\pi}=1.054574\times10^{-34}J s
+\end{equation}
+
+\subsection{Probability}
+In discrete cases, the average value of some function of $j$ is given by
+\begin{equation}
+	\langle f(j) \rangle=\Sigma_{j=0}^\infty f(j)P(j)
+\end{equation}
+and we have
+\begin{equation}
+	\langle j^2\rangle \geq \langle j\rangle
+\end{equation}
+In continuous cases, we have
+\begin{equation}
+	P_{ab}=\int_a^b\rho(x)dx
+\end{equation}
+\begin{equation}
+	\int_{-\infty}^{+\infty}\rho(x)dx=1
+\end{equation}\begin{equation}
+	\langle x\rangle=\int_{-\infty}^{+\infty}x\rho(x)dx
+\end{equation}\begin{equation}
+	\langle f(x) \rangle=\int_{-\infty}^{+\infty} f(x)\rho(x)dx
+\end{equation}\begin{equation}
+	\sigma^2 \equiv\langle(\delta x)^2\rangle=\langle x^2\rangle-\langle x\rangle^2
+\end{equation}
+\subsection{Normalization}
+\begin{equation}
+	\int_{-\infty}^{+\infty}|\Psi(x,t)|^2dx=1
+\end{equation}
+and
+\begin{equation}
+	\frac{d}{dt}\int_{-\infty}^{+\infty}|\Psi(x,t)|^2dx=0
+\end{equation}
+
+\subsection{Momentum}
+For a particle in state $\Psi$, the expectation value of x is
+\begin{equation}
+	\langle x\rangle=\int_{-\infty}^{+\infty}x|\Psi(x,t)|^2dx
+\end{equation}
+Thus
+\begin{equation}
+	\frac{d\langle x\rangle}{dt}=-\frac{i\hbar}{m}\int\Psi^*\frac{\partial \Psi}{\partial x}dx
+\end{equation}
+yielding
+\begin{equation}
+	\langle p\rangle=m\frac{d\langle x\rangle}{dt}=-i\hbar\int(\Psi^*\frac{\partial \Psi}{\partial x})dx
+\end{equation}
+We have 
+\begin{equation}
+	\hat{x}=x
+\end{equation}
+and
+\begin{equation}
+	\hat{p}=-i\hbar\frac{\partial}{\partial t}
+\end{equation}
+In general cases, for a function of $Q(x,p)$, we can simply replace every $p$ by $-i\hbar\frac{\partial}{\partial t}$
+\begin{equation}
+	\langle Q(x,p)\rangle=\int\Psi^*[Q(x,-i\hbar\frac{\partial}{\partial t})]\Psi dx
+\end{equation}
+\subsection{The Uncertainty Principle}
+The wave length of $\Psi$ is related to the momentum of the particle by the de Broglie formula
+\begin{equation}
+	p=\frac{h}{\lambda}=\frac{2\pi\hbar}{\lambda}
+\end{equation}
+and we have Heisenberg Uncertainty Principle
+\begin{equation}
+	\sigma_x\sigma_p\geq\frac{\hbar}{2}
+\end{equation}
+\newpage
+\section{Time-independent Schrödinger Equation}
+\subsection{Stationary States}
+In this chapter, assuming $V$ is independent of $t$. In that case the Schrodinger equation can be solved by the method of separation of variables, which is
+\begin{equation}
+	\Psi(x)=\psi(x)\varphi(t)
+\end{equation}
+After calculating, yielding
+\begin{equation}
+	\varphi(t)=Ce^{-i\frac{E}{\hbar}t}
+\end{equation}
+and
+\begin{equation}
+	-\frac{\hbar^2}{2m}\frac{d^2\psi}{dx^2}+V\psi=E\psi
+\end{equation}
+The second one is called the time-independent Schrodinger equation (Eq. 2.3).\\
+So the wave function can be represented as
+\begin{equation}
+	\Psi(x,t)=C\psi(x)e^{-i\frac{E}{\hbar}t}
+\end{equation}
+\\
+\\
+Reasons of what's so great about separable solutions:\\
+\begin{enumerate}
+	\item They are stationary states. The probability density 
+\begin{equation}
+	|\Psi(x,t)|^2=\Psi(x)*\Psi(x)=|\psi(x)|^2
+\end{equation}
+is time independent. So same thing happens in calculating the expectation value of any dynamical cariable
+\begin{equation}
+	\langle Q(x,p)\rangle=\int\psi^*Q(x,\frac{\hbar}{i}\frac{d}{dx})\psi dx
+\end{equation}
+Every expectation value is constant in time.
+	\item The total energy is called the Hamiltonian
+\begin{equation}
+	H(x,p)=\frac{p^2}{2m}+V(x)
+\end{equation}
+Hamiltonian operator is
+\begin{equation}
+	\hat{H}=-\frac{\hbar^2}{2m}\frac{\partial^2}{\partial x^2}+V(x)
+\end{equation}
+Thus the time independent Schrodinger equation can be written as
+\begin{equation}
+	\hat{H}\psi=E\psi
+\end{equation}
+After calculating, the variance of H is
+\begin{equation}
+	\sigma_H^2=E^2=E^2=0
+\end{equation}
+So the distribution has zero spread. The every measurement of total energy is certain to return the same value $E$.
+	\item The general solution is the linear combination of separable solutions. Eq. 2.3 yields an infinite collection of solutions. Any linear combination of solutions is itself a solution. Thus
+\begin{equation}
+	\Psi(x,t)=\Sigma_{n=1}^{+\infty}c_m\psi_ne^{-i\frac{E_n}{\hbar}t}
+\end{equation}
+\end{enumerate}
+Solve Schrodinger equation yield an infinite set of solutions in general. Thus the wave function is
+\begin{equation}
+	\Psi(x,t)=\Sigma_{n+1}^{+\infty}c_n\psi_n(x,t)e^{-i\frac{E_n}{\hbar}t}=\Sigma_{n+1}^{+\infty}c_n\Psi_n(x,t)
+\end{equation}
+Noted that the energies are different, for different stationary states, and the exponentials do not cancel, when you construct $|\Psi|^2$.
+\\
+\\
+Assuming $V(X)$ is time independent, rearrange the Schrodinger equation as
+\begin{equation}
+	\frac{d^2 \psi(x)}{d x^2}=\frac{2m}{\hbar^2}(V(x)-E)\psi(x)
+\end{equation}
+then 
+\begin{enumerate}
+	\item If $V(x)>E\Rightarrow \psi(x)$ curves away from $x$-axis
+	\item If $V(x)<E\Rightarrow \psi(x)$ curves toward $x$-axis\\\\
+\end{enumerate}
+In general, $V(x)$ is finite, $\frac{\partial}{\partial x}$ is continuous, $\frac{\partial^2}{\partial x}$ may be discontinuous (because of time-independent Schrodinger equation).
+\subsection{The Infinite Square Well}
+The potential energy of an infinite square well is as
+\begin{equation}
+	V(x)=\left\{\begin{matrix}0,\text{       }0\leq x\leq a\\\infty,\text{       }\text{otherwise}\end{matrix}\right.
+\end{equation}
+Out of the box, $V(x)=+\infty$, $E$ is finite, thus
+	$$V(x)\psi(x)=E\psi(x)$$
+	$$\Rightarrow\psi(x)=0$$
+In the box, $V(x)=0$, thus the time-independent Schrodinger equation reads
+\begin{equation}
+	-\frac{\hbar^2}{2m} \frac{d^2\psi}{dx^2}=E\psi
+\end{equation}
+Rearrange it, yielding
+\begin{equation}
+	\frac{d^2\psi}{dx^2}+\omega^2\psi=0
+\end{equation}
+where $\omega\equiv\frac{\sqrt{2mE}}{\hbar}$. The Eq.(2.16) is called the classical simple harmonic oscillator, the general solution is
+\begin{equation}
+	\psi(x)=A\sin \omega x+B\cos \omega x
+\end{equation}
+Continuity of $\psi$ requires that
+\begin{equation}
+	\psi(0)=\psi(a)=0
+\end{equation}
+so
+\begin{equation}
+	\omega_n=\frac{n\pi}{a}
+\end{equation}
+and
+\begin{equation}
+	E_n=\frac{\hbar^2\omega^2}{2m}=\frac{n^2\pi^2\hbar^2}{2ma^2}
+\end{equation}
+Normalize it, yielding
+\begin{equation}
+	\psi_n(x)=\sqrt{\frac{2}{a}}\sin(\frac{n\pi}{a}x)
+\end{equation}
+\\
+\\
+$\psi_1$ carries the lowest energy, is called the ground state, the others, whose energies increase in proportion to $n^2$, are called excited states. In the meantime, they are orthogonal, in the sense that
+\begin{equation}
+	\int\psi_m(x)^*\psi_n(x)dx=0,\text{  }iff\text{  }m\neq n
+\end{equation}
+Combine orthogonality and normalization into a single statement
+\begin{equation}
+	\int\psi_m^*\psi_n(x)dx=\delta_{mn}
+\end{equation}
+where $\delta_{mn}$ is called Kronecker delta, which is defined by
+\begin{equation}
+	\delta_{mn}=\begin{cases}
+		0,m\neq n,\\
+		1,m=n.
+	\end{cases}
+\end{equation}
+\\
+\\
+The functions are complete, which means any other function $\psi(x)$ can be expressed as a linear combination of them
+\begin{equation}
+	f(x)=\Sigma_{n=1}^{\infty}c_n\psi_n(x)=\sqrt{\frac{2}{a}}\Sigma_{n=1}^{\infty}c_n\sin(\frac{nx}{a}x)
+\end{equation}
+where
+\begin{equation}
+	c_n=\int\psi_n(x)^*f(x)dx
+\end{equation}
+\\
+\\
+The stationary states of the infinite square well are
+\begin{equation}
+	\Psi(x,t)=\sqrt{\frac 2a}\sin(\frac{n\pi}{a}x)e^{-iEt}
+\end{equation}
+where $E$ is from Eq.(2.20). The general solution to he time-independent Schrodinger equation is its linear combination
+\begin{equation}
+	\Psi(x,t)=\sqrt{\frac 2a}\Sigma_{n=1}^{\infty}c_n\sin(\frac{n\pi}{a}x)e^{-iE_nt}
+\end{equation}
+where
+\begin{equation}
+	c_n=\sqrt{2a}\int_0^a\sin(\frac{n\pi}{a}x)\Psi(x,t=0)dx.
+\end{equation}
+\\
+\\
+Actually, what $|c_n|^2$tellls you is the probability that a measurement of energy will result in $E_n$, and it was normalized
+\begin{equation}
+	\Sigma_{n=1}^\infty |c_n|^2\equiv 1
+\end{equation}
+so
+\begin{equation}
+	\langle H\rangle=\Sigma |c_n|^2 E_n
+\end{equation}
+\subsection{The Harmonic Oscillator}
+
+
+
+
+
+\end{document}
+
+
+
+
+
+
